@@ -15,9 +15,11 @@ import { createServer } from './server.js';
 async function main() {
   const args = process.argv.slice(2);
   const headless = !args.includes('--headless=false');
+  const chromePathArg = args.find((a) => a.startsWith('--chrome-path='));
+  const chromePath = chromePathArg ? chromePathArg.split('=').slice(1).join('=') : undefined;
 
   const browser = new BrowserManager();
-  await browser.launch({ headless });
+  await browser.launch({ headless, chromePath });
 
   const server = createServer(browser);
   const transport = new StdioServerTransport();

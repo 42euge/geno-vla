@@ -1,0 +1,43 @@
+site_name: geno-vla
+site_description: High-level browser automation MCP server for Claude Code
+site_url: https://42euge.github.io/geno-vla/
+repo_url: https://github.com/42euge/geno-vla
+repo_name: 42euge/geno-vla
+
+nav:
+  - Home: index.md
+  - User Guide: user-guide.md
+  - Contributing: contributing.md
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true

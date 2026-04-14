@@ -9,7 +9,7 @@
 import { chromium, type Browser, type BrowserContext, type Page } from 'playwright';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { existsSync, mkdirSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, rmSync, writeFileSync, readFileSync } from 'node:fs';
 
 /** Default path to the regular Google Chrome application on macOS. */
 const SYSTEM_CHROME_PATH = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -27,7 +27,6 @@ function acquireProfile(): string {
     mkdirSync(dir, { recursive: true });
     if (!existsSync(lock)) {
       // Claim this slot
-      const { writeFileSync } = require('node:fs');
       writeFileSync(lock, String(process.pid));
       // Clean lock on exit
       const cleanup = () => { try { rmSync(lock); } catch {} };
@@ -38,13 +37,11 @@ function acquireProfile(): string {
     }
     // Check if the locking process is still alive
     try {
-      const { readFileSync } = require('node:fs');
       const pid = parseInt(readFileSync(lock, 'utf8').trim(), 10);
       process.kill(pid, 0); // throws if process doesn't exist
     } catch {
       // Stale lock — reclaim
       rmSync(lock);
-      const { writeFileSync } = require('node:fs');
       writeFileSync(lock, String(process.pid));
       const cleanup = () => { try { rmSync(lock); } catch {} };
       process.on('exit', cleanup);

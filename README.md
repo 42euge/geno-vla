@@ -1,6 +1,6 @@
 # geno-vla
 
-High-level browser automation MCP server for Claude Code. Collapses multi-step Playwright operations into single tool calls.
+High-level browser automation MCP server for AI coding agents. Collapses multi-step Playwright operations into single tool calls.
 
 ## The Problem
 
@@ -11,7 +11,7 @@ The standard Playwright MCP server requires multiple round-trips per logical act
 ## Architecture
 
 ```
-Claude Code
+Coding agent
     |
     |  stdio (MCP protocol)
     v
@@ -30,16 +30,16 @@ The key design decision: geno-vla drives Playwright **directly** rather than wra
 ## Quick Start
 
 ```bash
-# Install
-cd geno-vla
-npm install
-npx playwright install chromium
-npm run build
-
-# Configure in Claude Code (~/.claude/mcp.json or project .mcp.json)
+geno-tools install geno-vla
 ```
 
-Add to your MCP configuration:
+Or from within an agent session:
+
+```
+/geno-tools install geno-vla
+```
+
+Once installed, add geno-vla to your MCP configuration (e.g. `~/.claude/mcp.json`, `.mcp.json`, or your agent's equivalent):
 
 ```json
 {
@@ -52,7 +52,7 @@ Add to your MCP configuration:
 }
 ```
 
-To run with a visible browser window:
+To run with a visible browser window, add `--headless=false`:
 
 ```json
 {

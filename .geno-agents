@@ -1,7 +1,0 @@
-role: geno-vla
-description: Browser automation MCP — persistent Chrome profiles, system Chrome, Google auth
-capabilities:
-  - browser
-  - screenshots
-  - automation
-  - chrome

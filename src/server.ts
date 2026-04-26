@@ -1,7 +1,7 @@
 /**
  * geno-vla MCP Server
  *
- * Exposes high-level browser automation tools to Claude Code.
+ * Exposes high-level browser automation tools via MCP.
  * Each tool call handles the full lifecycle locally (wait, act, verify)
  * instead of requiring multiple round-trips.
  */

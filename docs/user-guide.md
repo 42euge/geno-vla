@@ -4,24 +4,26 @@
 
 ### Prerequisites
 
+- A supported coding CLI (Claude Code, Gemini CLI, Codex, or OpenCode)
 - Node.js 20 or later
-- npm
 
 ### Setup
 
 ```bash
-git clone https://github.com/42euge/geno-vla.git
-cd geno-vla
-npm install
-npx playwright install chromium
-npm run build
+geno-tools install geno-vla
 ```
 
-The build step compiles TypeScript to JavaScript in the `dist/` directory. The MCP entry point is `dist/cli.js`.
+Or from within an agent session:
 
-## Configuring with Claude Code
+```
+/geno-tools install geno-vla
+```
 
-Add geno-vla to your MCP configuration. You can use the global config at `~/.claude/mcp.json` or a project-level `.mcp.json` file.
+The install clones the repo, runs `npm install`, builds the TypeScript, and installs Playwright's Chromium. The MCP entry point is `dist/cli.js`.
+
+## Configuring the MCP Server
+
+Add geno-vla to your agent's MCP configuration (e.g. `~/.claude/mcp.json`, `.mcp.json`, or your agent's equivalent).
 
 ### Headless mode (default)
 
@@ -51,7 +53,7 @@ Add `--headless=false` to see the browser as geno-vla controls it. Useful for de
 }
 ```
 
-After configuring, restart Claude Code. The geno-vla tools will appear in the available tool list.
+After configuring, restart your coding agent. The geno-vla tools will appear in the available tool list.
 
 ---
 
@@ -74,7 +76,7 @@ Navigate to a URL. Waits for the page to load and returns the page state as an A
 Navigate to https://github.com/42euge/geno-vla
 ```
 
-Claude will call `geno_navigate` with `url: "https://github.com/42euge/geno-vla"` and receive the full page state -- URL, title, HTTP status, and ARIA snapshot -- in a single response.
+The agent will call `geno_navigate` with `url: "https://github.com/42euge/geno-vla"` and receive the full page state -- URL, title, HTTP status, and ARIA snapshot -- in a single response.
 
 **What it handles internally:**
 
@@ -105,13 +107,13 @@ Click a button:
 ```
 Click the "Sign In" button on the page
 ```
-Claude calls `geno_interact` with `action: "click"`, `selector: "role=button[name='Sign In']"`.
+The agent calls `geno_interact` with `action: "click"`, `selector: "role=button[name='Sign In']"`.
 
 Type into a field:
 ```
 Type "hello world" into the search box
 ```
-Claude calls `geno_interact` with `action: "type"`, `selector: "input[name='q']"`, `value: "hello world"`.
+The agent calls `geno_interact` with `action: "type"`, `selector: "input[name='q']"`, `value: "hello world"`.
 
 **What it handles internally:**
 
@@ -142,13 +144,13 @@ Get page state:
 ```
 What's on the current page?
 ```
-Claude calls `geno_observe` with defaults and receives the ARIA snapshot.
+The agent calls `geno_observe` with defaults and receives the ARIA snapshot.
 
 Get a screenshot of a specific element:
 ```
 Show me a screenshot of the navigation bar
 ```
-Claude calls `geno_observe` with `includeScreenshot: true`, `selector: "nav"`.
+The agent calls `geno_observe` with `includeScreenshot: true`, `selector: "nav"`.
 
 ---
 
@@ -172,7 +174,7 @@ Fill an entire form in one call. Provide all field selectors and values, and opt
 Fill the login form with username "alice" and password "secret123", then submit
 ```
 
-Claude calls `geno_fill_form` with:
+The agent calls `geno_fill_form` with:
 ```json
 {
   "fields": [
@@ -209,7 +211,7 @@ Extract page metadata:
 Get the page title and all heading texts
 ```
 
-Claude calls `geno_extract` with:
+The agent calls `geno_extract` with:
 ```json
 {
   "expression": "({ title: document.title, headings: [...document.querySelectorAll('h1, h2, h3')].map(h => h.textContent.trim()) })"
@@ -221,7 +223,7 @@ Extract table data:
 Extract the data from the pricing table
 ```
 
-Claude calls `geno_extract` with a JS expression that reads the table rows and returns them as an array of objects.
+The agent calls `geno_extract` with a JS expression that reads the table rows and returns them as an array of objects.
 
 ---
 
@@ -235,7 +237,7 @@ A typical flow: navigate to a page, then interact with elements on it.
 2. `geno_interact` to click/type/select -- returns updated state
 3. Repeat `geno_interact` as needed
 
-Each step returns the full page state, so Claude always knows what is on the page without extra observe calls.
+Each step returns the full page state, so the agent always knows what is on the page without extra observe calls.
 
 ### Form filling
 
@@ -279,8 +281,8 @@ npx playwright install chromium
 
 Some pages with heavy JavaScript rendering may produce empty or minimal ARIA snapshots. Use `geno_observe` with `includeScreenshot: true` to get a visual representation instead.
 
-### Server does not appear in Claude Code
+### Server does not appear in agent session
 
 1. Verify the path in your MCP config points to the built `dist/cli.js` file
 2. Make sure you ran `npm run build`
-3. Restart Claude Code after changing MCP configuration
+3. Restart your coding agent after changing MCP configuration

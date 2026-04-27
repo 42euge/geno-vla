@@ -1,7 +1,7 @@
 {
   "name": "geno-vla",
   "version": "0.1.0",
-  "description": "Vision-Language-Action MCP server for Claude Code. Smart browser automation with local reactive handling.",
+  "description": "Vision-Language-Action MCP server for AI coding agents. Smart browser automation with local reactive handling.",
   "type": "module",
   "main": "dist/server.js",
   "bin": {

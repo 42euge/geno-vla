@@ -62,6 +62,14 @@ The server owns the browser instance directly. Each tool handler calls Playwrigh
 - **State representation**: ARIA snapshots are the primary page state format returned by tools
 - **Module format**: ESM (`"type": "module"` in package.json, `.js` extensions in imports)
 - **TypeScript**: strict mode enabled, `const` over `let`, `async/await` over raw promises
+- **Prefix aliasing**: this repo uses the canonical `geno-vla` prefix. Since it is an MCP server (not a slash-command package), there are no `/gt-*` aliases, but the `geno_` prefix on tool names serves the same namespacing role
+- **Adding a new skill**: create a directory under `skills/<skill-name>/` containing a `SKILL.md` manifest. Register the skill name in the Skills table below and document its purpose in the manifest
+
+## Skills
+
+| Skill | Description |
+|-------|-------------|
+| `geno-vla` | Umbrella skill — high-level browser automation via MCP tools |
 
 ## Dependencies
 

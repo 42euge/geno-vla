@@ -1,4 +1,4 @@
-name: vla
+name: geno-vla
 version: 0.1.0
 description: >-
   High-level browser automation MCP server. Collapses multi-step Playwright
